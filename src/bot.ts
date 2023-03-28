@@ -161,18 +161,13 @@ const aboutUrlKeyboard = new InlineKeyboard().url(
 bot.api.setMyCommands([
   { command: "yo", description: "Be greeted by the bot" },
   {
-    command: "effect",
-    description: "Apply text effects on the text. (usage: /effect [text])",
+    command: "random_reply",
+    description: "Randomly reply you",
   },
 ]);
 
 // Handle all other messages and the /start command
-const introductionMessage = `Hello! I'm a Telegram bot.
-I'm powered by Cyclic, the next-generation serverless computing platform.
-
-<b>Commands</b>
-/yo - Be greeted by me
-/effect [text] - Show a keyboard to apply text effects to [text]`;
+const introductionMessage = `Hello! I'm a Telegram bot.`;
 
 const replyWithIntro = (ctx: any) =>
   ctx.reply(introductionMessage, {
@@ -180,8 +175,34 @@ const replyWithIntro = (ctx: any) =>
     parse_mode: "HTML",
   });
 
+const replies = ["Zuo mo", "Hii", "What you doing", "ByeBye", "ehhhh", "what talking you", "nani", "sayonara", "jiayou", "go away", "don't stress"
+, "hohoo", "tsktsktsk", "smh", "lol", "hahaaaaaaaaaaaa cough**", "gws", "haizzz"];
+
+function shuffleArray(array:any) {
+  for (var i = array.length - 1; i > 0; i--) { 
+ 
+      // Generate random number 
+      var j = Math.floor(Math.random() * (i + 1));
+                 
+      var temp = array[i];
+      array[i] = array[j];
+      array[j] = temp;
+  }
+     
+  return array;
+}
+
+shuffleArray(replies);
+const random_reply = (ctx: any) =>
+  ctx.reply(replies[0], {
+    reply_markup: aboutUrlKeyboard,
+    parse_mode: "HTML",
+  });  
+
+
 bot.command("start", replyWithIntro);
 bot.on("message", replyWithIntro);
+bot.command("random_reply", random_reply);
 
 // Start the server
 if (process.env.NODE_ENV === "production") {
