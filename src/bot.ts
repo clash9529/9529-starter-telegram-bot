@@ -194,10 +194,7 @@ function shuffleArray(array:any) {
 
 shuffleArray(replies);
 const random_reply = (ctx: any) =>
-  ctx.reply(replies[0], {
-    reply_markup: aboutUrlKeyboard,
-    parse_mode: "HTML",
-  });  
+  ctx.reply(replies[0]);  
 
 
 bot.command("start", replyWithIntro);
