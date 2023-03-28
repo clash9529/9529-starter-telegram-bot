@@ -175,7 +175,7 @@ const replyWithIntro = (ctx: any) =>
     parse_mode: "HTML",
   });
 
-const replies = ["Zuo mo", "Hii", "What you doing", "ByeBye", "ehhhh", "what talking you", "nani", "sayonara", "jiayou", "go away", "don't stress"
+var replies = ["Zuo mo", "Hii", "What you doing", "ByeBye", "ehhhh", "what talking you", "nani", "sayonara", "jiayou", "go away", "don't stress"
 , "hohoo", "tsktsktsk", "smh", "lol", "hahaaaaaaaaaaaa cough**", "gws", "haizzz"];
 
 function shuffleArray(array:any) {
@@ -201,7 +201,6 @@ const random_reply = (ctx: any) =>
 
 
 bot.command("start", replyWithIntro);
-bot.on("message", replyWithIntro);
 bot.command("random_reply", random_reply);
 
 // Start the server
