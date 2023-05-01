@@ -148,6 +148,21 @@ for (const effect of allEffects) {
   });
 }
 
+// variables
+var replies = ["Zuo mo", "Hii", "What you doing", "ByeBye", "ehhhh", "what talking you", "nani", "sayonara", "jiayou", "go away", "don't stress"
+, "hohoo", "tsktsktsk", "smh", "lol", "hahaaaaaaaaaaaa cough**", "gws", "haizzz"];
+
+// Functions
+function getRandomInt(max: number) {
+  return Math.floor(Math.random() * max);
+}
+
+const random_reply = (ctx: any) =>{
+  // Generate random number 
+  var j = getRandomInt(replies.length);
+  ctx.reply(replies[j]);  
+}
+
 // Suggest commands in the menu
 bot.api.setMyCommands([
   { command: "yo", description: "Be greeted by the bot" },
@@ -156,22 +171,6 @@ bot.api.setMyCommands([
     description: "Randomly reply you",
   },
 ]);
-
-function getRandomInt(max: number) {
-  return Math.floor(Math.random() * max);
-}
-  
-// Functions
-
-var replies = ["Zuo mo", "Hii", "What you doing", "ByeBye", "ehhhh", "what talking you", "nani", "sayonara", "jiayou", "go away", "don't stress"
-, "hohoo", "tsktsktsk", "smh", "lol", "hahaaaaaaaaaaaa cough**", "gws", "haizzz"];
-
-const random_reply = (ctx: any) =>{
-  // Generate random number 
-  var j = getRandomInt(replies.length);
-  ctx.reply(replies[j]);  
-}
-
 
 // Handle the /yo command to greet the user
 bot.command("yo", (ctx) => ctx.reply(`Yo ${ctx.from?.username}`));
