@@ -31,23 +31,26 @@ from flask import Flask, request
 
 API_KEY = "5439755812:AAHi4_C4l_PPlUL04N44msFKfVSJO7fIkxU"
 bot = telebot.TeleBot(API_KEY)
-bot.delete_webhook()
 
 server = Flask(__name__)
 
 
-list_of_food = ["MCD", "KFC", "Kopitiam", "Genki", "MAla", "Saizeriya",
-                "Korea food", "Japan food", "Western food", "Soup", "Burger King", "Subway"]
+list_of_food = ["MCD", "KFC", "Burger King", "Kopitiam", "Genki", "MAla", "Saizeriya",
+                "Korea food", "Zha Cai Fan", "Japan food", "Duck rice", "Chicken rice", "Western food", "Soup", "Burger King", "Subway", "Takagi", 
+                "Food court", "Bonchon (Lunch deals)", "Yoshinoya", "Poppeyes", "Pasta", "Ban mian", "Mookata", "Zoeys diner", "Ban mian", "Zoeys diner",
+                "Pizza hut", "Swensens", "Chicken hotpot", "Astons", "Genki", "Ahjumma", "Mookata", "Hotpot"]
 
-list_of_food_joyce = ["Takagi", "Food court", "MCD", "KFC", "Burger King", "Subway",
-                      "Bonchon (Lunch deals)", "Pepper Lunch", "Saizeriya", "Yoshinoya", "Poppeyes", "Western", "Mala", "Duck rice", "Chicken rice", "Pasta", "Korean", "Zha Cai Fan", "Ban mian", "Mookata", "Zoeys diner", ]
-
-list_of_food_joyceEx = ["Pizza hut", "Swensens", "Chicken hotpot", "Astons", "Genki", "Ahjumma", "Mookata", "BBQ",
-                        "Hotpot", "Bar and drink cocktails ;)", "Din tai fung", "Beauty in a pot"]
 
 funny_text = ["Zuo mo", "Hii", "What you doing", "ByeBye", "ehhhh", "what talking you", "nani", "sayonara", "jiayou", "go away", "don't stress"
                 , "hohoo", "tsktsktsk", "smh", "lol", "hahaaaaaaaaaaaa cough**", "gws", "haizzz"]
 
+
+@bot.message_handler(commands=['start'])
+def start_command(message):
+   bot.send_message(
+       message.chat.id,
+       'Hallo, this is a simple bot.'
+   )
 
 @bot.message_handler(commands=["random_reply"])
 def start(message):
@@ -66,7 +69,11 @@ def joke(message):
         bot.send_message(message.chat.id, stringRes["joke"])
     else:
         bot.send_message(message.chat.id, stringRes["setup"])
-        bot.send_message(message.chat.id, stringRes["delivery"])
+        bot.send_message(
+            message.chat.id,
+            formatting.hspoiler(stringRes["delivery"]),
+            parse_mode='HTML'
+        )
 
 
 ################ FOOD ###########################
@@ -86,41 +93,49 @@ def eatwhatahlist(message):
         food_list += i + "\n"
 
     bot.send_message(message.chat.id, food_list)
+    
+@bot.message_handler(commands=["food_dish"])
+def foodDish(message):
+    response = requests.get("https://www.themealdb.com/api/json/v1/1/random.php")
+    stringRes = json.loads(response.content)
+    stringRes = stringRes["meals"]       
+    stringRes = stringRes[0] 
+    bot.send_message(message.chat.id, stringRes["strMeal"], parse_mode="HTML")
 
 
 ####################### FOR JOYCE #########################
 
 
-@bot.message_handler(commands=["joyce_menu"])
-def eatwhatah_joyce(message):
-    random.shuffle(list_of_food_joyce)
-    bot.send_message(message.chat.id, list_of_food_joyce[0])
+@bot.message_handler(commands=["mehnu"])
+def mehnu(message):
+    random.shuffle(list_of_food)
+    bot.send_message(message.chat.id, list_of_food[0])
 
 
-@bot.message_handler(commands=["listoffood_joyce"])
-def eatwhatahlist_joyce(message):
-    list_of_food_joyce.sort()
-    food_list = "List of Choices: \n\n"
-    for i in list_of_food_joyce:
-        food_list += i + "\n"
+# @bot.message_handler(commands=["listoffood_joyce"])
+# def eatwhatahlist_joyce(message):
+#     list_of_food_joyce.sort()
+#     food_list = "List of Choices: \n\n"
+#     for i in list_of_food_joyce:
+#         food_list += i + "\n"
 
-    bot.send_message(message.chat.id, food_list)
-
-
-@bot.message_handler(commands=["whenjoycegotmoney"])
-def eatwhatah_joyceEx(message):
-    random.shuffle(list_of_food_joyceEx)
-    bot.send_message(message.chat.id, list_of_food_joyceEx[0])
+#     bot.send_message(message.chat.id, food_list)
 
 
-@bot.message_handler(commands=["whenjoycegotmoney_list"])
-def eatwhatahlist_joyceEx(message):
-    list_of_food_joyceEx.sort()
-    food_list = "List of Choices: \n\n"
-    for i in list_of_food_joyceEx:
-        food_list += i + "\n"
+# @bot.message_handler(commands=["whenjoycegotmoney"])
+# def eatwhatah_joyceEx(message):
+#     random.shuffle(list_of_food_joyceEx)
+#     bot.send_message(message.chat.id, list_of_food_joyceEx[0])
 
-    bot.send_message(message.chat.id, food_list)
+
+# @bot.message_handler(commands=["whenjoycegotmoney_list"])
+# def eatwhatahlist_joyceEx(message):
+#     list_of_food_joyceEx.sort()
+#     food_list = "List of Choices: \n\n"
+#     for i in list_of_food_joyceEx:
+#         food_list += i + "\n"
+
+#     bot.send_message(message.chat.id, food_list)
 
 
 ############################## Weather ###############################
@@ -260,6 +275,7 @@ def encouragement(message):
 #             bot.send_message(message.chat.id, "Win liao lor")
 #     else:
 #         bot.send_message(message.chat.id, "Provide object la")
+
 
 
 @bot.message_handler(commands=['cisorpaperstone'])
