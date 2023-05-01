@@ -166,13 +166,13 @@ bot.api.setMyCommands([
   },
 ]);
 
-// Handle the /yo command to greet the user
-bot.command("yo", (ctx) => ctx.reply(`Yo ${ctx.from?.username}`));
 bot.command("random_reply", (ctx) => 
   {
     var j = getRandomInt(replies.length);
     ctx.reply(replies[j]);  
   });
+// Handle the /yo command to greet the user
+bot.command("yo", (ctx) => ctx.reply(`Yo ${ctx.from?.username}`));
 
 // Start the server
 if (process.env.NODE_ENV === "production") {
