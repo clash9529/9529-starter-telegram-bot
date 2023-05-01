@@ -157,12 +157,6 @@ function getRandomInt(max: number) {
   return Math.floor(Math.random() * max);
 }
 
-const random_reply = (ctx: any) =>{
-  // Generate random number 
-  var j = getRandomInt(replies.length);
-  ctx.reply(replies[j]);  
-}
-
 // Suggest commands in the menu
 bot.api.setMyCommands([
   { command: "yo", description: "Be greeted by the bot" },
@@ -174,7 +168,11 @@ bot.api.setMyCommands([
 
 // Handle the /yo command to greet the user
 bot.command("yo", (ctx) => ctx.reply(`Yo ${ctx.from?.username}`));
-bot.command("random_reply", random_reply);
+bot.command("random_reply", (ctx) => 
+  {
+    var j = getRandomInt(replies.length);
+    ctx.reply(replies[j]);  
+  });
 
 // Start the server
 if (process.env.NODE_ENV === "production") {
