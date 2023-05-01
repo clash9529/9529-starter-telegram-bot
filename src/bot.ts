@@ -192,9 +192,9 @@ function shuffleArray(array:any) {
   return array;
 }
 
-shuffleArray(replies);
-const random_reply = (ctx: any) =>
-  ctx.reply(replies[0]);  
+const random_reply = (ctx: any) =>{
+  shuffleArray(replies);
+  ctx.reply(replies[0]);  }
 
 
 bot.command("start", replyWithIntro);
