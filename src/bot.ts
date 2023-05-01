@@ -8,9 +8,6 @@ import type { Variant as TextEffectVariant } from "./textEffects";
 // Create a bot using the Telegram token
 const bot = new Bot(process.env.TELEGRAM_TOKEN || "");
 
-// Handle the /yo command to greet the user
-bot.command("yo", (ctx) => ctx.reply(`Yo ${ctx.from?.username}`));
-
 // Handle the /effect command to apply text effects using an inline keyboard
 type Effect = { code: TextEffectVariant; label: string };
 const allEffects: Effect[] = [
@@ -151,12 +148,6 @@ for (const effect of allEffects) {
   });
 }
 
-// Handle the /about command
-const aboutUrlKeyboard = new InlineKeyboard().url(
-  "Host your own bot for free.",
-  "https://cyclic.sh/"
-);
-
 // Suggest commands in the menu
 bot.api.setMyCommands([
   { command: "yo", description: "Be greeted by the bot" },
@@ -166,38 +157,24 @@ bot.api.setMyCommands([
   },
 ]);
 
-// Handle all other messages and the /start command
-const introductionMessage = `Hello! I'm a Telegram bot.`;
-
-const replyWithIntro = (ctx: any) =>
-  ctx.reply(introductionMessage, {
-    reply_markup: aboutUrlKeyboard,
-    parse_mode: "HTML",
-  });
+function getRandomInt(max: number) {
+  return Math.floor(Math.random() * max);
+}
+  
+// Functions
 
 var replies = ["Zuo mo", "Hii", "What you doing", "ByeBye", "ehhhh", "what talking you", "nani", "sayonara", "jiayou", "go away", "don't stress"
 , "hohoo", "tsktsktsk", "smh", "lol", "hahaaaaaaaaaaaa cough**", "gws", "haizzz"];
 
-function shuffleArray(array:any) {
-  for (var i = array.length - 1; i > 0; i--) { 
- 
-      // Generate random number 
-      var j = Math.floor(Math.random() * (i + 1));
-                 
-      var temp = array[i];
-      array[i] = array[j];
-      array[j] = temp;
-  }
-     
-  return array;
+const random_reply = (ctx: any) =>{
+  // Generate random number 
+  var j = getRandomInt(replies.length);
+  ctx.reply(replies[j]);  
 }
 
-const random_reply = (ctx: any) =>{
-  shuffleArray(replies);
-  ctx.reply(replies[0]);  }
 
-
-bot.command("start", replyWithIntro);
+// Handle the /yo command to greet the user
+bot.command("yo", (ctx) => ctx.reply(`Yo ${ctx.from?.username}`));
 bot.command("random_reply", random_reply);
 
 // Start the server
