@@ -1,3 +1,23 @@
+# import telebot
+
+
+# # API_KEY = "5718246087:AAFm96xbM-mvDgFlBS65vzz6OjkFZagNxYk"
+
+# API_KEY = "5439755812:AAHi4_C4l_PPlUL04N44msFKfVSJO7fIkxU"
+# bot = telebot.TeleBot(API_KEY)
+
+# # handle commands, /start
+# @bot.message_handler(commands=['start'])
+# def handle_command(message):
+#     bot.reply_to(message, "Hello, welcome to Telegram Bot!")
+    
+# # handle all messages, echo response back to users
+# @bot.message_handler(func=lambda message: True)
+# def handle_all_message(message):
+# 	bot.reply_to(message, message.text)
+
+# bot.polling()
+
 import http.client
 import json
 import os
@@ -11,6 +31,7 @@ from flask import Flask, request
 
 API_KEY = "5439755812:AAHi4_C4l_PPlUL04N44msFKfVSJO7fIkxU"
 bot = telebot.TeleBot(API_KEY)
+bot.delete_webhook()
 
 server = Flask(__name__)
 
@@ -259,24 +280,25 @@ def riddle(message):
         parse_mode='HTML'
     )
 
+bot.polling()
 
 ############################## SERVER ###############################
 
 
-@server.route('/' + API_KEY, methods=['POST'])
-def getMessage():
-    json_string = request.get_data().decode('utf-8')
-    update = telebot.types.Update.de_json(json_string)
-    bot.process_new_updates([update])
-    return "!", 200
+# @server.route('/' + API_KEY, methods=['POST'])
+# def getMessage():
+#     json_string = request.get_data().decode('utf-8')
+#     update = telebot.types.Update.de_json(json_string)
+#     bot.process_new_updates([update])
+#     return "!", 200
 
 
-@server.route("/")
-def webhook():
-    bot.remove_webhook()
-    bot.set_webhook(url='https://musical-octo-eureka.herokuapp.com/' + API_KEY)
-    return "!", 200
+# @server.route("/")
+# def webhook():
+#     bot.remove_webhook()
+#     bot.set_webhook(url='https://musical-octo-eureka.herokuapp.com/' + API_KEY)
+#     return "!", 200
 
 
-if __name__ == "__main__":
-    server.run(host="0.0.0.0", port=int(os.environ.get('PORT', 5000)))
+# if __name__ == "__main__":
+#     server.run(host="0.0.0.0", port=int(os.environ.get('PORT', 5000)))
