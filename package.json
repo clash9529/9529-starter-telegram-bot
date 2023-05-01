@@ -7,12 +7,12 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/clash9529/9529-literate-succotash.git"
+        "url": "git+https://github.com/clash9529/9529-starter-telegram-bot.git"
     },
     "author": "",
     "license": "ISC",
     "bugs": {
-        "url": "https://github.com/clash9529/9529-literate-succotash/issues"
+        "url": "https://github.com/clash9529/9529-starter-telegram-bot/issues"
     },
-    "homepage": "https://github.com/clash9529/9529-literate-succotash#readme"
+    "homepage": "https://github.com/clash9529/9529-starter-telegram-bot#readme"
 }
