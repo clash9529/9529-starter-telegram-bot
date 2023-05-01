@@ -1,5 +1,5 @@
 
-var PythonShell = require('python-shell');
+let {PythonShell} = require('python-shell')
 
 
 PythonShell.run('bot.py', null).then(messages=>{
