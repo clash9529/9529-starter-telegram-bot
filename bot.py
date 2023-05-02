@@ -65,7 +65,7 @@ def start(message):
 
 @bot.message_handler(commands=["joke"])
 def joke(message):
-    response = requests.get("https://v2.jokeapi.dev/joke/Any?safe-mode")
+    response = requests.get("https://v2.jokeapi.dev/joke/Any?safe-mode", verify=False)
     stringRes = json.loads(response.content)
     if stringRes["type"] == "single":
         bot.send_message(message.chat.id, stringRes["joke"])
@@ -98,7 +98,7 @@ def eatwhatahlist(message):
     
 @bot.message_handler(commands=["food_dish"])
 def foodDish(message):
-    response = requests.get("https://www.themealdb.com/api/json/v1/1/random.php")
+    response = requests.get("https://www.themealdb.com/api/json/v1/1/random.php", verify=False)
     stringRes = json.loads(response.content)
     stringRes = stringRes["meals"]       
     stringRes = stringRes[0] 
@@ -208,7 +208,7 @@ def lyricquotes(message):
             if i+1 != len(split_message):
                 url_str += "%20"
         
-        response = requests.get(url_str)
+        response = requests.get(url_str, verify=False)
         stringRes = json.loads(response.content)
         result = stringRes["info"]["lyrics"] + "\n\n" + "Title: " + stringRes["info"]["title"]
 
@@ -223,7 +223,7 @@ def lyricquotes(message):
 
 @bot.message_handler(commands=["bibleverse"])
 def bibleverse(message):
-    response = requests.get("http://labs.bible.org/api/?passage=random")
+    response = requests.get("http://labs.bible.org/api/?passage=random", verify=False)
     bot.send_message(message.chat.id, response.content, parse_mode="HTML")
 
 
@@ -232,7 +232,7 @@ def bibleverse(message):
 
 @bot.message_handler(commands=["encouragement"])
 def encouragement(message):
-    response = requests.get("https://zenquotes.io/api/random")
+    response = requests.get("https://zenquotes.io/api/random", verify=False)
     stringRes = json.loads(response.content)
 
     result = ""
@@ -288,7 +288,7 @@ def cisorpaperstone(message):
 
 @bot.message_handler(commands=['riddle'])
 def riddle(message):
-    response = requests.get("https://riddles-api.vercel.app/random")
+    response = requests.get("https://riddles-api.vercel.app/random", verify=False)
     stringRes = json.loads(response.content)
     bot.send_message(message.chat.id, stringRes["riddle"])
 
