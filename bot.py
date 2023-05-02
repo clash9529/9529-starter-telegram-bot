@@ -28,9 +28,7 @@ from telebot import *
 from telebot import formatting
 from flask import Flask, request
 
-from dotenv import load_dotenv
 
-load_dotenv()
 
 
 bot = telebot.TeleBot(os.environ.get('API_KEY'))
