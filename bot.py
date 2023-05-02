@@ -32,6 +32,7 @@ from flask import Flask, request
 
 
 bot = telebot.TeleBot(os.environ.get('API_KEY'))
+bot.delete_webhook()
 
 server = Flask(__name__)
 
