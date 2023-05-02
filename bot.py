@@ -33,7 +33,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
-bot = telebot.TeleBot(os.getenv('API_KEY'))
+bot = telebot.TeleBot(os.environ.get('API_KEY'))
 
 server = Flask(__name__)
 
