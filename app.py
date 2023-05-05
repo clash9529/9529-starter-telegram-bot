@@ -74,13 +74,21 @@ list_of_answers_en = ['GET A CLEARER VIEW', 'TAKE MORE TIME TO DECIDE', 'RECONSI
                    , 'MAYBE', 'THERE IS NO GUARANTEE' , 'THE OUTCOME WIL BE POSITIVE', 'SETTLE IT SOON', 'THAT WOULD BE A WASTE OF MONEY'
                    , 'YOUR ACTIONS WILL IMPROVE THINGS', 'TRY A MORE UNLIKELY SOLUTION', 'TELL SOMEONE WHAT IT MEANS TO YOU'
                    , "DON'T GET CAUGHT UP IN YOUR EMOTIONS", "DON'T WASTE YOUR TIME", 'REPRIORITIZE WHAT IS IMPORTANT', 'THE ANSWER MAY COME TO YOU IN ANOTHER LANGUAGE'
-                   , 'KEEP AN OPEN MIND', 'IT COULD BE EXTRAORDINARY']
+                   , 'KEEP AN OPEN MIND', 'IT COULD BE EXTRAORDINARY', "YOU'LL HAVE TO MAKE IT UP AS YOU GO", 'BE PATIENT', "DON'T DOUBT IT"
+                   , 'DEAL WITH IT LATER', 'ONLY DO IT ONCE', "NOT IF YOU'RE ALONE", 'NOW YOU CAN', "DON'T BE RIDICULOUS", 'UNFAVORABLE AT THIS TIME'
+                   , 'COUNT TO 10 & ASK AGAIN', 'LET IT GO', 'IT IS NOT SIGNIFICANT', 'ENJOY THE EXPERIENCE', 'SPEAK UP ABOUT IT'
+                   , 'IT MAY BE DIFFICULT BUT YOU WILL FIND VALUE IN IT', 'IT CANNOT FALL', "DON'T FORGET TO HAVE FUN", 'IT WILL BE A PLEASURE', 'IT IS SIGNIFICANT'
+                   , "DON'T ASK FOR ANY MORE AT THIS TIME", 'GET A CLEARER VIEW', 'PAY ATTENTION TO THE DETAILS', 'BE MORE GENEROUS', 'DO IT EARLY'
+                   , 'YOU WILL NOT BE DISAPPOINTED', 'LAUGH ABOUT IT', 'THIS IS A GOOD TIME TO MAKE A NEW PLAN']
 
 list_of_answers_ch = ['用一个更清晰的看法', '花更多的时间来决定', '重新考虑你的想法', '节省你的精力', '当然'
                       , '先允许自己休息一下', '避免第一个解决方案', '相信你独到的思维', '这有一个重要的东西用来过渡到另一个局面'
                       , '也许', '没人可以保证', '结果将会是积极的', '尽早解决它', '它将会浪费金钱', '你的行为将改善事情'
                       , '尝试一种不太可能的解决方案', '告诉别人这对你的意义', '不要被情绪所控制', '别浪费你的时间', '重新安排什么才是重要的', '答案可能会在另一种语言里'
-                      , '保持开放的心态', '它可能是非凡的']
+                      , '保持开放的心态', '它可能是非凡的', '为了走的更远你必须弥补这个缺点', '要耐心', '不要怀疑', '晚一些再处理它', '只做一次', '如果你一个人就不行', '现在就可以'
+                      , '别那么荒唐', '不宜在这个时候', '数到10 & 再问一遍', '放手吧', '这并不重要', '享受这种经历', '说出这件事'
+                      , '这可能很困难但你会发现它的价值', '它不可能失败', '别忘了乐趣', '这将是一件有乐趣的事情', '这很重要', '现在不要再问更多了'
+                      , '用一个更清晰的看法', '注意力集中在细节上', '再慷慨大方一点', '尽早去做', '你不会失望的', '一笑而过', '这是一个制定新计划的好时机']
 
 @bot.message_handler(commands=["bookofanswers_en"])
 def bookofanswersEN(message):
