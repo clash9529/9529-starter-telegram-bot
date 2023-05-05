@@ -1,30 +1,10 @@
-# import telebot
-
-
-# # API_KEY = "5718246087:AAFm96xbM-mvDgFlBS65vzz6OjkFZagNxYk"
-
-# API_KEY = "5439755812:AAHi4_C4l_PPlUL04N44msFKfVSJO7fIkxU"
-# bot = telebot.TeleBot(API_KEY)
-
-# # handle commands, /start
-# @bot.message_handler(commands=['start'])
-# def handle_command(message):
-#     bot.reply_to(message, "Hello, welcome to Telegram Bot!")
-    
-# # handle all messages, echo response back to users
-# @bot.message_handler(func=lambda message: True)
-# def handle_all_message(message):
-# 	bot.reply_to(message, message.text)
-
-# bot.polling()
-
 import http.client
 import json
 import os
 import random
 
 import requests
-from telebot import * 
+from telebot import *
 from telebot import formatting
 from flask import Flask, request
 
@@ -38,7 +18,7 @@ server = Flask(__name__)
 
 
 list_of_food = ["MCD", "KFC", "Burger King", "Kopitiam", "Genki", "MAla", "Saizeriya",
-                "Korea food", "Zha Cai Fan", "Japan food", "Duck rice", "Chicken rice", "Western food", "Soup", "Burger King", "Subway", "Takagi", 
+                "Korea food", "Zha Cai Fan", "Japan food", "Duck rice", "Chicken rice", "Western food", "Soup", "Burger King", "Subway", "Takagi",
                 "Food court", "Bonchon (Lunch deals)", "Yoshinoya", "Poppeyes", "Pasta", "Ban mian", "Mookata", "Zoeys diner", "Ban mian", "Zoeys diner",
                 "Pizza hut", "Swensens", "Chicken hotpot", "Astons", "Genki", "Ahjumma", "Mookata", "Hotpot"]
 
@@ -46,6 +26,18 @@ list_of_food = ["MCD", "KFC", "Burger King", "Kopitiam", "Genki", "MAla", "Saize
 funny_text = ["Zuo mo", "Hii", "What you doing", "ByeBye", "ehhhh", "what talking you", "nani", "sayonara", "jiayou", "go away", "don't stress"
                 , "hohoo", "tsktsktsk", "smh", "lol", "hahaaaaaaaaaaaa cough**", "gws", "haizzz"]
 
+
+@bot.message_handler(func=lambda msg: msg.text is not None and '/' not in msg.text)
+def sayHi(message):
+    m = message.text.lower()
+    if m == "hi":
+         bot.reply_to(message, "Hello!")
+    if m == "lol":
+         bot.reply_to(message, "Lmao")
+    if m == "death" or m == "die":
+        bot.reply_to(message, "Avada Kedavra")
+    if m.find("hai") != -1:
+        bot.reply_to(message, "breath in breath out x 3 thanks")
 
 @bot.message_handler(commands=['start'])
 def start_command(message):
@@ -77,6 +69,12 @@ def joke(message):
             parse_mode='HTML'
         )
 
+@bot.message_handler(commands=["bookofanswers"])
+def bookofanswers(message):
+    response = requests.get("https://www.myanswersbook.com/zh-cn.html", verify=False)
+    stringRes = json.loads(response.content)
+    print(stringRes)
+
 
 ################ FOOD ###########################
 
@@ -95,13 +93,13 @@ def eatwhatahlist(message):
         food_list += i + "\n"
 
     bot.send_message(message.chat.id, food_list)
-    
+
 @bot.message_handler(commands=["food_dish"])
 def foodDish(message):
     response = requests.get("https://www.themealdb.com/api/json/v1/1/random.php", verify=False)
     stringRes = json.loads(response.content)
-    stringRes = stringRes["meals"]       
-    stringRes = stringRes[0] 
+    stringRes = stringRes["meals"]
+    stringRes = stringRes[0]
     bot.send_message(message.chat.id, stringRes["strMeal"], parse_mode="HTML")
 
 
@@ -200,20 +198,20 @@ def theweathernow(message):
 def lyricquotes(message):
     split_message = str(message.text).split()
 
-    url_str = "https://lyric.mackle.im/api?artist=" 
+    url_str = "https://lyric.mackle.im/api?artist="
     if len(split_message) > 1:
 
         for i in range(1, len(split_message)):
             url_str += split_message[i]
             if i+1 != len(split_message):
                 url_str += "%20"
-        
+
         response = requests.get(url_str, verify=False)
         stringRes = json.loads(response.content)
         result = stringRes["info"]["lyrics"] + "\n\n" + "Title: " + stringRes["info"]["title"]
 
         bot.send_message(message.chat.id, result)
-        
+
     else:
         bot.send_message(message.chat.id, "Please provide artist")
 
@@ -223,7 +221,7 @@ def lyricquotes(message):
 
 @bot.message_handler(commands=["bibleverse"])
 def bibleverse(message):
-    response = requests.get("http://labs.bible.org/api/?passage=random", verify=False)
+    response = requests.get("https://labs.bible.org/api/?passage=random", verify=False)
     bot.send_message(message.chat.id, response.content, parse_mode="HTML")
 
 
@@ -266,7 +264,7 @@ def encouragement(message):
 #         idx = standard.index(user_input[1])
 #         idx_bot = standard.index(obj_list[0])
 #         last_idx = len(standard) - 1
-        
+
 #         if idx == 0 and idx_bot == last_idx:
 #             bot.send_message(message.chat.id, "Win liao lor")
 #         elif idx_bot == 0 and idx == last_idx:
@@ -280,10 +278,10 @@ def encouragement(message):
 
 
 
-@bot.message_handler(commands=['cisorpaperstone'])
-def cisorpaperstone(message):
-    bot.send_message(message.chat.id, text="YOUR MESSAGE HERE", reply_markup=types.ReplyKeyboardRemove())
-    print(message.text)
+# @bot.message_handler(commands=['cisorpaperstone'])
+# def cisorpaperstone(message):
+#     bot.send_message(message.chat.id, text="YOUR MESSAGE HERE", reply_markup=types.ReplyKeyboardRemove())
+#     print(message.text)
 
 
 @bot.message_handler(commands=['riddle'])
@@ -298,25 +296,36 @@ def riddle(message):
         parse_mode='HTML'
     )
 
-# bot.polling()
+bot.polling()
+
+# while True:
+
+#     # Some stuff happens here that may or may not populate your list.
+#     try:
+
+#     except IndexError:
+#         # If there is an IndexError (the type you are having), wait a second then
+#         # the loop will repeat.
+#         sleep(1)
+
 
 ############################## SERVER ###############################
 
 
-@server.route('/' + API_KEY, methods=['POST'])
-def getMessage():
-    json_string = request.get_data().decode('utf-8')
-    update = telebot.types.Update.de_json(json_string)
-    bot.process_new_updates([update])
-    return "!", 200
+# @server.route('/' + API_KEY, methods=['POST'])
+# def getMessage():
+#     json_string = request.get_data().decode('utf-8')
+#     update = telebot.types.Update.de_json(json_string)
+#     bot.process_new_updates([update])
+#     return "!", 200
 
 
-@server.route("/")
-def webhook():
-    bot.remove_webhook()
-    bot.set_webhook(url='https://musical-octo-eureka.herokuapp.com/' + API_KEY)
-    return "!", 200
+# @server.route("/")
+# def webhook():
+#     bot.remove_webhook()
+#     bot.set_webhook(url='https://musical-octo-eureka.herokuapp.com/' + API_KEY)
+#     return "!", 200
 
 
-if __name__ == "__main__":
-    server.run(host="0.0.0.0", port=int(os.environ.get('PORT', 5000)))
+# if __name__ == "__main__":
+#     server.run(host="0.0.0.0", port=int(os.environ.get('PORT', 8080)))
