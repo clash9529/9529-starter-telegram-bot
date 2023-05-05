@@ -68,12 +68,29 @@ def joke(message):
             formatting.hspoiler(stringRes["delivery"]),
             parse_mode='HTML'
         )
+        
+list_of_answers_en = ['GET A CLEARER VIEW', 'TAKE MORE TIME TO DECIDE', 'RECONSIDER YOUR APPROACH', 'SAVE YOUR ENERGY', 'DEFINITELY' 
+                   ,'ALLOW YOURSELF TO REST FIRST', 'AVOID THE FIRST SOLUTION', 'TRUST YOUR ORIGINAL THOUGHT', 'THERE IS A SUBSTANTIAL LINK TO ANOTHER SITUATION'
+                   , 'MAYBE', 'THERE IS NO GUARANTEE' , 'THE OUTCOME WIL BE POSITIVE', 'SETTLE IT SOON', 'THAT WOULD BE A WASTE OF MONEY'
+                   , 'YOUR ACTIONS WILL IMPROVE THINGS', 'TRY A MORE UNLIKELY SOLUTION', 'TELL SOMEONE WHAT IT MEANS TO YOU'
+                   , "DON'T GET CAUGHT UP IN YOUR EMOTIONS", "DON'T WASTE YOUR TIME", 'REPRIORITIZE WHAT IS IMPORTANT', 'THE ANSWER MAY COME TO YOU IN ANOTHER LANGUAGE'
+                   , 'KEEP AN OPEN MIND', 'IT COULD BE EXTRAORDINARY']
 
-@bot.message_handler(commands=["bookofanswers"])
-def bookofanswers(message):
-    response = requests.get("https://www.myanswersbook.com/zh-cn.html", verify=False)
-    stringRes = json.loads(response.content)
-    print(stringRes)
+list_of_answers_ch = ['用一个更清晰的看法', '花更多的时间来决定', '重新考虑你的想法', '节省你的精力', '当然'
+                      , '先允许自己休息一下', '避免第一个解决方案', '相信你独到的思维', '这有一个重要的东西用来过渡到另一个局面'
+                      , '也许', '没人可以保证', '结果将会是积极的', '尽早解决它', '它将会浪费金钱', '你的行为将改善事情'
+                      , '尝试一种不太可能的解决方案', '告诉别人这对你的意义', '不要被情绪所控制', '别浪费你的时间', '重新安排什么才是重要的', '答案可能会在另一种语言里'
+                      , '保持开放的心态', '它可能是非凡的']
+
+@bot.message_handler(commands=["bookofanswers_en"])
+def bookofanswersEN(message):
+    random.shuffle(list_of_answers_en)
+    bot.send_message(message.chat.id, list_of_answers_en[0])
+    
+@bot.message_handler(commands=["bookofanswers_ch"])
+def bookofanswersCH(message):
+    random.shuffle(list_of_answers_ch)
+    bot.send_message(message.chat.id, list_of_answers_ch[0])
 
 
 ################ FOOD ###########################
